@@ -5,6 +5,8 @@ import NeonBust from '../components/NeonBust';
 import NeonButton from '../components/NeonButton';
 import ZoomPictures from '../components/ZoomPictures';
 import GalleryModal from '../components/GalleryModal';
+import AtmosphereBlock from '../components/AtmosphereBlock';
+import AdvantageSection from '../components/AdvantageSection';
 
 const HomePage = () => {
   const [galleryOpen, setGalleryOpen] = useState(false);
@@ -54,9 +56,10 @@ const HomePage = () => {
           flex: '0 0 40%',
           color: 'white',
           fontFamily: 'sans-serif',
+          marginRight: '40px',
         }}>
           <h2 style={{
-            fontSize: 'clamp(32px, 4vw, 56px)',
+            fontSize: 'clamp(24px, 3vw, 42px)',
             fontWeight: 700,
             margin: 0,
             letterSpacing: '2px',
@@ -67,10 +70,10 @@ const HomePage = () => {
           </h2>
 
           <p style={{
-            fontSize: 'clamp(16px, 1.5vw, 22px)',
+            fontSize: 'clamp(13px, 1.2vw, 18px)',
             color: 'rgba(255,255,255,0.6)',
-            lineHeight: 1.8,
-            marginTop: '20px',
+            lineHeight: 1.7,
+            marginTop: '16px',
             letterSpacing: '0.5px',
           }}>
             От 2500 ₽ и с гарантией 25 месяцев.
@@ -78,10 +81,10 @@ const HomePage = () => {
           </p>
 
           <p style={{
-            fontSize: 'clamp(16px, 1.5vw, 22px)',
+            fontSize: 'clamp(13px, 1.2vw, 18px)',
             color: 'rgba(255,255,255,0.6)',
-            lineHeight: 1.8,
-            marginTop: '16px',
+            lineHeight: 1.7,
+            marginTop: '12px',
             letterSpacing: '0.5px',
           }}>
             Расскажите клиентам, чем вы занимаетесь и почему это важно.
@@ -90,7 +93,7 @@ const HomePage = () => {
           <div style={{
             display: 'flex',
             gap: '20px',
-            marginTop: '40px',
+            marginTop: '32px',
             flexWrap: 'wrap',
           }}>
             <NeonButton color="cyan">
@@ -159,21 +162,11 @@ const HomePage = () => {
         </NeonButton>
       </div>
 
-      <div style={{
-        height: '100vh',
-        width: '100%',
-        background: '#0a0a0a',
-        color: 'white',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: '24px',
-        fontFamily: 'Arial, sans-serif',
-      }}>
-        Текст под прожектором
-      </div>
-
       <GalleryModal isOpen={galleryOpen} onClose={() => setGalleryOpen(false)} />
+
+      <AtmosphereBlock />
+
+      <AdvantageSection />
     </div>
   );
 };

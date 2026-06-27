@@ -1,0 +1,8 @@
+@keyframes rain {
+  0% {
+    transform: translateY(0) rotate(10deg);
+  }
+  100% {
+    transform: translateY(110vh) rotate(10deg);
+  }
+}

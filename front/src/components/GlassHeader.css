@@ -1,0 +1,197 @@
+.glass-header {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  pointer-events: auto;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  border-radius: 20px;
+  will-change: transform, opacity;
+
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px) saturate(1.5) brightness(1.1);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5) brightness(1.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  box-shadow:
+    0 0 10px rgba(0, 200, 255, 0.25),
+    0 0 30px rgba(0, 200, 255, 0.12),
+    0 0 60px rgba(0, 200, 255, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.glass-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.02) 60%,
+    transparent 100%
+  );
+  border-radius: 20px 20px 0 0;
+  pointer-events: none;
+}
+
+.glass-header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 220, 255, 0.5),
+    rgba(255, 255, 255, 0.3),
+    rgba(0, 220, 255, 0.5),
+    transparent
+  );
+  pointer-events: none;
+}
+
+.glass-header-hidden {
+  transform: translateX(-50%) translateY(-120px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Убираем лишние вибрации и фиксируем углы */
+.glass-header-glow {
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  /* Фиксируем границы через clip-path, чтобы углы не "плавали" */
+  clip-path: inset(0 round 20px); 
+  pointer-events: none;
+  z-index: -1;
+  animation: neon-pulse-refined 4s ease-in-out infinite;
+}
+
+/* Более мягкая и глубокая пульсация */
+@keyframes neon-pulse-refined {
+  0%, 100% {
+    opacity: 0.7;
+    filter: blur(5px);
+  }
+  50% {
+    opacity: 1;
+    filter: blur(8px); /* Увеличенная амплитуда размытия */
+  }
+}
+
+/* Улучшаем свечение границы, чтобы оно не разрывалось в углах */
+.glass-header-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px; /* Чуть толще, чтобы скрыть микро-щели */
+  background: linear-gradient(
+    135deg,
+    rgba(0, 200, 255, 0.6) 0%,
+    rgba(0, 200, 255, 0.1) 50%,
+    rgba(0, 200, 255, 0.6) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  /* Анимация прозрачности вместо трансформации scale */
+  animation: neon-border-smooth 4s ease-in-out infinite;
+}
+
+@keyframes neon-border-smooth {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.9; }
+}
+
+.glass-header-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  box-sizing: border-box;
+  color: #fff;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  pointer-events: none;
+}
+
+.glass-header-content > * {
+  pointer-events: auto;
+}
+
+.glass-header-content a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.glass-header-content a:hover {
+  color: #00dcff;
+  text-shadow: 0 0 12px rgba(0, 220, 255, 0.6);
+}
+
+.glass-header-content a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(0, 220, 255, 0.8), rgba(0, 220, 255, 0.3));
+  transition: width 0.3s ease;
+  box-shadow: 0 0 6px rgba(0, 220, 255, 0.4);
+}
+
+.glass-header-content a:hover::after {
+  width: 100%;
+}
+
+.glass-header-logo {
+  display: flex;
+  align-items: center;
+  pointer-events: auto;
+  text-decoration: none;
+}
+
+.glass-header-logo img {
+  height:70px;
+  width: auto;
+  filter: drop-shadow(0 0 4px rgba(0, 200, 255, 0.35))
+          drop-shadow(0 0 10px rgba(0, 200, 255, 0.15));
+  transition: filter 0.3s ease;
+}
+
+.glass-header-logo img:hover {
+  filter: drop-shadow(0 0 6px rgba(0, 220, 255, 0.5))
+          drop-shadow(0 0 14px rgba(0, 220, 255, 0.25));
+}
+
+@media (max-width: 768px) {
+  .glass-header-content {
+    padding: 0 16px !important;
+    font-size: 14px;
+  }
+  .glass-header-content nav {
+    gap: 16px !important;
+  }
+}

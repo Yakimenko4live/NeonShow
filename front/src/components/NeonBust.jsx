@@ -1,5 +1,5 @@
 import React from 'react';
-import head from '../assets/Head.png';
+import head from '../assets/components-img/Head.png';
 import './NeonBust.css';
 
 const NeonBust = () => {

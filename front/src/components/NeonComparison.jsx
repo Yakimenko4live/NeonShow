@@ -38,11 +38,11 @@ const comparisons = [
 
 const glassStyle = {
   background: 'rgba(255, 255, 255, 0.06)',
-  backdropFilter: 'blur(20px) saturate(1.5) brightness(1.1)',
-  WebkitBackdropFilter: 'blur(20px) saturate(1.5) brightness(1.1)',
+  backdropFilter: 'blur(10px) saturate(1.2)',
+  WebkitBackdropFilter: 'blur(10px) saturate(1.2)',
   border: '1px solid rgba(255, 255, 255, 0.12)',
   borderRadius: '20px',
-  boxShadow: '0 0 10px rgba(0, 200, 255, 0.15), 0 0 40px rgba(0, 200, 255, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.12)',
+  boxShadow: '0 0 10px rgba(0, 200, 255, 0.15), 0 0 40px rgba(0, 200, 255, 0.05)',
 };
 
 const bulletIcon = (

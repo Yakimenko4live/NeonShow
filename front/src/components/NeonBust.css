@@ -36,10 +36,7 @@
   pointer-events: none;
   animation: float-diamond 4s ease-in-out infinite alternate;
   transition: filter 0.5s ease;
-  filter:
-    drop-shadow(0 0 4px #ffe600)
-    drop-shadow(0 0 12px #ffe600)
-    drop-shadow(0 0 25px rgba(255, 230, 0, 0.5));
+  filter: drop-shadow(0 0 8px #ffe600);
 }
 
 .neon-bust__triangle {
@@ -52,10 +49,7 @@
   pointer-events: none;
   animation: float-triangle 4.5s ease-in-out infinite alternate;
   transition: filter 0.5s ease;
-  filter:
-    drop-shadow(0 0 4px #00f0ff)
-    drop-shadow(0 0 12px #00f0ff)
-    drop-shadow(0 0 25px rgba(0, 240, 255, 0.5));
+  filter: drop-shadow(0 0 8px #00f0ff);
 }
 
 .neon-bust__triangle--back {
@@ -77,10 +71,7 @@
   z-index: 5;
   animation: float-circle 4.2s ease-in-out infinite alternate;
   transition: filter 0.5s ease;
-  filter:
-    drop-shadow(0 0 4px #ff2d7b)
-    drop-shadow(0 0 12px #ff2d7b)
-    drop-shadow(0 0 25px rgba(255, 45, 123, 0.5));
+  filter: drop-shadow(0 0 8px #ff2d7b);
 }
 
 .neon-bust:hover .neon-bust__diamond {

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import image1 from '../assets/1.png';
-import image2 from '../assets/2.png';
+import image1 from '../assets/components-img/1.png';
+import image2 from '../assets/components-img/2.png';
 import './SpotlightImage.css';
 
 const SpotlightImage = () => {
@@ -19,7 +19,7 @@ const SpotlightImage = () => {
   const scale = useTransform(scrollY, [0, 300], [1, 0.95]);
   const y = useTransform(scrollY, [0, 300], [0, 50]);
 
-  const raindrops = useMemo(() => Array.from({ length: 150 }, (_, i) => ({
+  const raindrops = useMemo(() => Array.from({ length: 60 }, (_, i) => ({
     id: i,
     left: Math.random() * 100,
     animationDuration: 0.5 + Math.random() * 0.8,

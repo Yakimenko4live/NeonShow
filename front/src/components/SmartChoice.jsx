@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import heroImage from '../assets/Hero2.png';
+import heroImage from '../assets/components-img/Hero2.png';
 import neonOverlay from '../assets/Hero3.svg';
 
 const colors = [
@@ -41,12 +41,10 @@ const getHue = (hex) => {
 };
 
 const glassStyle = {
-  background: 'rgba(255, 255, 255, 0.05)',
-  backdropFilter: 'blur(24px) saturate(1.4) brightness(1.1)',
-  WebkitBackdropFilter: 'blur(24px) saturate(1.4) brightness(1.1)',
+  background: 'rgba(255, 255, 255, 0.08)',
   border: '1px solid rgba(255, 255, 255, 0.1)',
   borderRadius: '16px',
-  boxShadow: '0 0 10px rgba(0, 200, 255, 0.1), 0 0 30px rgba(0, 200, 255, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+  boxShadow: '0 0 10px rgba(0, 200, 255, 0.1), 0 0 30px rgba(0, 200, 255, 0.04)',
 };
 
 const SmartChoice = () => {
@@ -60,7 +58,7 @@ const SmartChoice = () => {
     if (activeTab === 1) {
       smartIntervalRef.current = setInterval(() => {
         setSmartHue(prev => (prev + 2) % 360);
-      }, 50);
+      }, 100);
     } else {
       if (smartIntervalRef.current) {
         clearInterval(smartIntervalRef.current);
@@ -387,9 +385,7 @@ const SmartChoice = () => {
               position: 'absolute',
               top: 20,
               right: 20,
-              background: 'rgba(0,0,0,0.5)',
-              backdropFilter: 'blur(16px)',
-              WebkitBackdropFilter: 'blur(16px)',
+              background: 'rgba(0,0,0,0.6)',
               border: '1px solid rgba(255,255,255,0.1)',
               borderRadius: '12px',
               padding: '10px 14px',

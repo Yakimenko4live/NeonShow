@@ -11,6 +11,10 @@ import NeonComparison from '../components/NeonComparison';
 import MarqueeLine from '../components/MarqueeLine';
 import ProductionSection from '../components/ProductionSection';
 import SmartChoice from '../components/SmartChoice';
+import Service from '../components/Service';
+import QualityGuarantee from '../components/QualityGuarantee';
+import InstallmentMarquee from '../components/InstallmentMarquee';
+import PricingBlock from '../components/PricingBlock';
 
 const HomePage = () => {
   const [galleryOpen, setGalleryOpen] = useState(false);
@@ -112,7 +116,7 @@ const HomePage = () => {
 
       <div style={{
         width: '100%',
-        padding: '80px 80px',
+        padding: '120px 80px',
         background: '#080808',
         display: 'flex',
         flexDirection: 'column',
@@ -151,12 +155,14 @@ const HomePage = () => {
         </p>
       </div>
 
-      <ZoomPictures />
+      <div style={{ marginTop: '60px' }}>
+        <ZoomPictures />
+      </div>
 
       {/* Кнопка "Галерея" */}
       <div style={{
         width: '100%',
-        padding: '60px 0',
+        padding: '100px 0',
         background: '#080808',
         display: 'flex',
         justifyContent: 'center',
@@ -168,17 +174,41 @@ const HomePage = () => {
 
       <GalleryModal isOpen={galleryOpen} onClose={() => setGalleryOpen(false)} />
 
-      <AtmosphereBlock />
+      <div style={{ marginTop: '60px' }}>
+        <AtmosphereBlock />
+      </div>
 
-      <AdvantageSection />
+      <div style={{ marginTop: '120px' }}>
+        <AdvantageSection />
+      </div>
 
-      <NeonComparison />
+      <div style={{ marginTop: '120px' }}>
+        <NeonComparison />
+      </div>
 
-      <MarqueeLine />
+      <div style={{ marginTop: '60px' }}>
+        <MarqueeLine />
+      </div>
 
-      <ProductionSection />
+      <div style={{ marginTop: '120px' }}>
+        <ProductionSection />
+      </div>
 
-      <SmartChoice />
+      <div style={{ marginTop: '120px' }}>
+        <SmartChoice />
+      </div>
+
+      <div style={{ marginTop: '120px' }}>
+        <Service />
+      </div>
+
+      <div style={{ marginTop: '120px' }}>
+        <QualityGuarantee />
+      </div>
+
+      <InstallmentMarquee />
+
+      <PricingBlock />
     </div>
   );
 };

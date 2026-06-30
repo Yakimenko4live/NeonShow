@@ -1,5 +1,4 @@
-import React, { useRef, useMemo } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React, { useRef, useEffect, useMemo } from 'react';
 
 const imagesGlob = import.meta.glob('../assets/Gallery/*.{png,jpg,jpeg,webp}', {
   eager: true,
@@ -7,6 +6,9 @@ const imagesGlob = import.meta.glob('../assets/Gallery/*.{png,jpg,jpeg,webp}', {
 });
 
 const ZoomPictures = () => {
+  const containerRef = useRef(null);
+  const imagesRef = useRef([]);
+
   const images = useMemo(() => {
     const imageEntries = Object.entries(imagesGlob).map(([path, url]) => ({ path, url }));
     const heroIndex = imageEntries.findIndex(img => img.path.includes('Hero.png'));
@@ -18,48 +20,69 @@ const ZoomPictures = () => {
     } else {
       sorted = imageEntries.map(img => img.url);
     }
-    return sorted;
+    return sorted.slice(0, 10);
   }, []);
 
-  const containerRef = useRef(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end'],
-  });
-
-  const scale1 = useTransform(scrollYProgress, [0, 1], [1, 3]);
-  const scale2 = useTransform(scrollYProgress, [0, 1], [1, 5]);
-  const scale3 = useTransform(scrollYProgress, [0, 1], [1, 6]);
-  const scale4 = useTransform(scrollYProgress, [0, 1], [1, 7.5]);
-
-  const rotate0 = useTransform(scrollYProgress, [0, 1], [0, 0]);
-  const rotate1 = useTransform(scrollYProgress, [0, 1], [0, -2]);
-  const rotate2 = useTransform(scrollYProgress, [0, 1], [0, 2]);
-  const rotate3 = useTransform(scrollYProgress, [0, 1], [0, -3]);
-  const rotate4 = useTransform(scrollYProgress, [0, 1], [0, 3]);
-
   const layouts = useMemo(() => [
-    { top: '0', left: '0', width: '38vw', aspect: '16/10', scale: scale1, rotate: rotate0 },
-    { top: '-18vh', left: '-16vw', width: '16vw', aspect: '3/4', scale: scale2, rotate: rotate1 },
-    { top: '-20vh', left: '14vw', width: '14vw', aspect: '4/3', scale: scale2, rotate: rotate2 },
-    { top: '18vh', left: '-14vw', width: '15vw', aspect: '1/1', scale: scale2, rotate: rotate3 },
-    { top: '16vh', left: '16vw', width: '17vw', aspect: '16/9', scale: scale2, rotate: rotate4 },
-    { top: '-32vh', left: '2vw', width: '12vw', aspect: '3/4', scale: scale3, rotate: rotate1 },
-    { top: '30vh', left: '4vw', width: '13vw', aspect: '4/3', scale: scale3, rotate: rotate2 },
-    { top: '2vh', left: '-32vw', width: '14vw', aspect: '16/9', scale: scale3, rotate: rotate3 },
-    { top: '-2vh', left: '30vw', width: '13vw', aspect: '3/4', scale: scale3, rotate: rotate4 },
-    { top: '-28vh', left: '-28vw', width: '10vw', aspect: '1/1', scale: scale4, rotate: rotate1 },
-    { top: '-26vh', left: '26vw', width: '11vw', aspect: '16/9', scale: scale4, rotate: rotate2 },
-    { top: '28vh', left: '-26vw', width: '11vw', aspect: '4/3', scale: scale4, rotate: rotate3 },
-    { top: '26vh', left: '28vw', width: '9vw', aspect: '3/4', scale: scale4, rotate: rotate4 },
-    { top: '-14vh', left: '-40vw', width: '9vw', aspect: '16/9', scale: scale4, rotate: rotate1 },
-    { top: '14vh', left: '38vw', width: '10vw', aspect: '1/1', scale: scale4, rotate: rotate2 },
-    { top: '38vh', left: '-14vw', width: '10vw', aspect: '3/4', scale: scale4, rotate: rotate3 },
-  ], [scale1, scale2, scale3, scale4, rotate0, rotate1, rotate2, rotate3, rotate4]);
+    { top: 0, left: 0, width: 38, aspect: '16/10', scale: [1, 3], rotate: 0, zIndex: 10, spread: 0 },
+    { top: -18, left: -16, width: 16, aspect: '3/4', scale: [1, 1], rotate: -2, zIndex: 1, spread: 1 },
+    { top: -20, left: 14, width: 14, aspect: '4/3', scale: [1, 1], rotate: 2, zIndex: 1, spread: 1 },
+    { top: 18, left: -14, width: 15, aspect: '1/1', scale: [1, 1], rotate: -3, zIndex: 1, spread: 1 },
+    { top: 16, left: 16, width: 17, aspect: '16/9', scale: [1, 1], rotate: 3, zIndex: 1, spread: 1 },
+    { top: -32, left: 2, width: 12, aspect: '3/4', scale: [1, 1], rotate: -2, zIndex: 1, spread: 1 },
+    { top: 30, left: 4, width: 13, aspect: '4/3', scale: [1, 1], rotate: 2, zIndex: 1, spread: 1 },
+    { top: 2, left: -32, width: 14, aspect: '16/9', scale: [1, 1], rotate: -3, zIndex: 1, spread: 1 },
+    { top: -2, left: 30, width: 13, aspect: '3/4', scale: [1, 1], rotate: 3, zIndex: 1, spread: 1 },
+    { top: -28, left: -28, width: 10, aspect: '1/1', scale: [1, 1], rotate: -2, zIndex: 1, spread: 1 },
+  ], []);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    let ticking = false;
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+
+      requestAnimationFrame(() => {
+        const rect = container.getBoundingClientRect();
+        const containerHeight = container.offsetHeight;
+        const viewportHeight = window.innerHeight;
+
+        const scrolled = -rect.top;
+        const scrollRange = containerHeight - viewportHeight;
+        const progress = Math.max(0, Math.min(1, scrolled / scrollRange));
+
+        imagesRef.current.forEach((el, i) => {
+          if (!el) return;
+          const layout = layouts[i];
+          if (!layout) return;
+
+          if (layout.spread === 0) {
+            const currentScale = layout.scale[0] + (layout.scale[1] - layout.scale[0]) * progress;
+            el.style.transform = `translate(-50%, -50%) scale(${currentScale})`;
+          } else {
+            const spreadX = layout.left * progress * 0.8;
+            const spreadY = layout.top * progress * 0.8;
+            const currentRotate = layout.rotate * progress;
+            el.style.transform = `translate(calc(-50% + ${spreadX}vw), calc(-50% + ${spreadY}vh)) rotate(${currentRotate}deg)`;
+          }
+        });
+
+        ticking = false;
+      });
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [layouts]);
 
   return (
-    <div ref={containerRef} style={{ height: '300vh', position: 'relative', width: '100%' }}>
+    <div ref={containerRef} style={{ height: '250vh', position: 'relative', width: '100%' }}>
       <div style={{
         position: 'sticky',
         top: 0,
@@ -77,61 +100,47 @@ const ZoomPictures = () => {
           height: '100vmin',
           borderRadius: '50%',
           background: 'radial-gradient(ellipse at center, rgba(0, 220, 255, 0.06), transparent 55%)',
-          filter: 'blur(40px)',
           pointerEvents: 'none',
         }} />
 
         {images.map((src, index) => {
-          const layout = layouts[index] || layouts[layouts.length - 1];
+          const layout = layouts[index];
+          if (!layout) return null;
 
           return (
-            <motion.div
+            <div
               key={index}
+              ref={el => imagesRef.current[index] = el}
               style={{
                 position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                scale: layout.scale,
-                zIndex: index === 0 ? 10 : 1,
-                willChange: 'transform',
-              }}
-            >
-              <motion.div style={{
-                position: 'relative',
-                top: layout.top,
-                left: layout.left,
-                width: layout.width,
+                top: `${50 + layout.top}%`,
+                left: `${50 + layout.left}%`,
+                width: `${layout.width}vw`,
                 aspectRatio: layout.aspect,
-                rotate: layout.rotate,
                 borderRadius: '12px',
                 overflow: 'hidden',
                 background: '#111',
-                zIndex: index === 0 ? 10 : 1,
+                zIndex: layout.zIndex,
                 boxShadow: index === 0
-                  ? '0 0 60px rgba(0, 220, 255, 0.12), 0 0 15px rgba(0, 220, 255, 0.2), inset 0 0 15px rgba(0, 220, 255, 0.05)'
-                  : '0 20px 50px rgba(0, 0, 0, 0.5), 0 0 12px rgba(0, 220, 255, 0.15), inset 0 0 12px rgba(0, 220, 255, 0.03)',
+                  ? '0 0 60px rgba(0, 220, 255, 0.12), 0 0 15px rgba(0, 220, 255, 0.2)'
+                  : '0 20px 50px rgba(0, 0, 0, 0.5), 0 0 12px rgba(0, 220, 255, 0.15)',
                 willChange: 'transform',
-                transform: 'translateZ(0)',
-                backfaceVisibility: 'hidden',
-              }}>
-                <img
-                  src={src}
-                  alt=""
-                  loading="eager"
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    display: 'block',
-                  }}
-                />
-              </motion.div>
-            </motion.div>
+                transformOrigin: 'center center',
+              }}
+            >
+              <img
+                src={src}
+                alt=""
+                loading={index < 2 ? "eager" : "lazy"}
+                decoding="async"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  display: 'block',
+                }}
+              />
+            </div>
           );
         })}
       </div>

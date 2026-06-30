@@ -1,7 +1,7 @@
 import React from 'react';
 
-const MarqueeLine = () => {
-  const text = 'ЗАКАЗАТЬ НЕОНОВУЮ ВЫВЕСКУ ДЛЯ БИЗНЕСА ⧫ ЗАКАЗАТЬ НЕОНОВУЮ ВЫВЕСКУ ДЛЯ ИНТЕРЬЕРА ⧫ ЗАКАЗАТЬ НЕОНОВУЮ ВЫВЕСКУ В ПОДАРОК ⧫ ';
+const InstallmentMarquee = () => {
+  const text = 'Есть рассрочка ⧫ 3,4,6 месяцев ⧫ При заказе от 30.000 ₽ ⧫ ';
 
   const textStyle = {
     fontSize: 'clamp(28px, 4vw, 56px)',
@@ -53,4 +53,4 @@ const MarqueeLine = () => {
   );
 };
 
-export default MarqueeLine;
+export default InstallmentMarquee;

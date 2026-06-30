@@ -46,9 +46,6 @@ const StyledWrapper = styled.div`
     background-image: linear-gradient(rgb(163, 35, 105) 35%, rgb(0, 180, 210));
     animation: spinning82341 1.7s linear infinite;
     filter: blur(1px);
-    box-shadow:
-      0px -5px 15px 0px rgb(200, 55, 111),
-      0px 5px 15px 0px rgb(0, 180, 210);
   }
 
   .fill {
@@ -63,7 +60,7 @@ const StyledWrapper = styled.div`
       rgba(0, 180, 210, 0.7)
     );
     animation: spinning82341 2.5s linear infinite reverse;
-    filter: blur(3px);
+    filter: blur(2px);
   }
 
   .icon {
@@ -84,14 +81,10 @@ const StyledWrapper = styled.div`
 
   @keyframes icon-glow {
     0%, 100% {
-      filter: drop-shadow(0 0 3px rgba(0, 180, 210, 0.6))
-              drop-shadow(0 0 8px rgba(0, 180, 210, 0.3))
-              brightness(1);
+      filter: drop-shadow(0 0 4px rgba(0, 180, 210, 0.6)) brightness(1);
     }
     50% {
-      filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.7))
-              drop-shadow(0 0 12px rgba(200, 55, 111, 0.4))
-              brightness(1.2);
+      filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.7)) brightness(1.2);
     }
   }
 `;

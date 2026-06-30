@@ -1,0 +1,14 @@
+.marquee-scroll {
+  display: flex;
+  white-space: nowrap;
+  width: max-content;
+  animation: marqueeScroll 225s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}

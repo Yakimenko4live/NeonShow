@@ -7,6 +7,10 @@ import ZoomPictures from '../components/ZoomPictures';
 import GalleryModal from '../components/GalleryModal';
 import AtmosphereBlock from '../components/AtmosphereBlock';
 import AdvantageSection from '../components/AdvantageSection';
+import NeonComparison from '../components/NeonComparison';
+import MarqueeLine from '../components/MarqueeLine';
+import ProductionSection from '../components/ProductionSection';
+import SmartChoice from '../components/SmartChoice';
 
 const HomePage = () => {
   const [galleryOpen, setGalleryOpen] = useState(false);
@@ -167,6 +171,14 @@ const HomePage = () => {
       <AtmosphereBlock />
 
       <AdvantageSection />
+
+      <NeonComparison />
+
+      <MarqueeLine />
+
+      <ProductionSection />
+
+      <SmartChoice />
     </div>
   );
 };
